@@ -1,0 +1,11 @@
+[user]
+	name = Stephen DeSanto
+	email = anoryx@anoryx.com
+[push]
+    default = simple
+[core]
+    editor = vim
+    whitespace = trailing-space,space-before-tab,indent-with-non-tab
+[color]
+    ui = auto
+

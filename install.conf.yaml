@@ -2,6 +2,7 @@
 
 - link:
     ~/.bash_profile: system/.bash_profile
+    ~/.gitconfig: app/gitconfig
     ~/.psqlrc: app/psqlrc
     ~/.tmux.conf: app/tmux.conf
     ~/.vim: vim/
