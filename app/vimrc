@@ -1,0 +1,78 @@
+" pathogen
+execute pathogen#infect()
+
+" solarized theme
+syntax enable
+set background=dark
+colorscheme solarized
+
+" settings for indentLine
+let g:indentLine_char = '│'
+"let g:indentLine_color_term = 235
+
+" Sets how many lines of history VIM has to remember
+set history=700
+
+" Enable filetype plugin
+filetype plugin on
+filetype indent on
+
+" fix tabs
+set tabstop=4
+set expandtab
+set softtabstop=4
+set shiftwidth=4
+
+" turn off auto adding comments on next line
+" so you can cut and paste reliably
+" http://vimdoc.sourceforge.net/htmldoc/change.html#fo-table
+set fo=tcq
+set nocompatible
+set modeline
+
+" Set to auto read when a file is changed from the outside
+set autoread
+
+" With a map leader it's possible to do extra key combinations
+" like <leader>w saves the current file
+let mapleader = ","
+let g:mapleader = ","
+
+nmap j gj
+nmap k gk
+
+" Fast saving
+nmap <leader>w :w!<cr>
+
+set shortmess=I
+
+" Set 7 lines to the curors - when moving vertical..
+set so=7
+
+set wildmenu "Turn on WiLd menu
+set wildmode=longest,list,full
+set ruler "Always show current position
+set cmdheight=2 "The commandbar height
+set hid "Change buffer - without saving
+set number "line numbers
+
+" Set backspace config
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
+
+set ignorecase "Ignore case when searching
+set smartcase
+
+set hlsearch "Highlight search things
+set incsearch "Make search act like search in modern browsers
+set nolazyredraw "Don't redraw while executing macros
+set magic "Set magic on, for regular expressions
+set showmatch "Show matching bracets when text indicator is over them
+set mat=2 "How many tenths of a second to blink
+
+" No sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+

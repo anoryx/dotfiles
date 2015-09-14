@@ -1,0 +1,28 @@
+## Safety Aliases
+alias rm="rm -i"
+alias cp="cp -i"
+alias mv="mv -i"
+
+## Easier directory traversal
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+
+## GNU Coreutils Aliases
+alias ls="ls --color=always"
+alias la="ls -la --color=always"
+alias lr="ls -lart --color=always"
+alias grep="grep --color=always"
+alias egrep="egrep --color=always"
+alias igrep="grep -i --color=always"
+alias rgrep="grep -r --color=always"
+
+# Enable aliases to be sudo’ed
+alias sudo='sudo '
+
+# Other helpful stuff
+alias diff="git diff"
+
+# misc. bullshit
+alias pf="fortune | ponysay"
