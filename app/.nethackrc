@@ -7,9 +7,12 @@ OPTIONS=autopickup,pickup_types:$!/="?,pickup_burden:unencumbered
 OPTIONS=runmode:teleport,!rest_on_space
 OPTIONS:number_pad:0
 OPTIONS=color
-OPTIONS=boulder:233
+OPTIONS=boulder:0
 OPTIONS=fruit:marionberry
 
+OPTIONS=windowtype:curses
+OPTIONS=align_message:bottom,align_status:right
+OPTIONS=term_cols=110,term_rows=32
 
 # eidocolors 1.7.1, 22:02 17 May 06
 # last minor: added {X} colors
