@@ -4,6 +4,7 @@ apps=(
     iterm2
     virtualbox
     vlc
+    vivaldi
 )
 
 brew cask install "${apps[@]}"
