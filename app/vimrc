@@ -1,10 +1,11 @@
+set nocompatible
+
 " pathogen
 execute pathogen#infect()
 
-" solarized theme
-syntax enable
+" themew
 set background=dark
-colorscheme solarized
+colorscheme monokai
 
 " settings for indentLine
 let g:indentLine_char = '│'
@@ -27,7 +28,6 @@ set shiftwidth=4
 " so you can cut and paste reliably
 " http://vimdoc.sourceforge.net/htmldoc/change.html#fo-table
 set fo=tcq
-set nocompatible
 set modeline
 
 " Set to auto read when a file is changed from the outside
@@ -38,11 +38,14 @@ set autoread
 let mapleader = ","
 let g:mapleader = ","
 
+" movement over long lines
 nmap j gj
 nmap k gk
 
 " Fast saving
 nmap <leader>w :w!<cr>
+" Fast quit
+nmap <leader>q :q<cr>
 
 set shortmess=I
 
@@ -60,6 +63,7 @@ set number "line numbers
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
 
+syntax enable
 set ignorecase "Ignore case when searching
 set smartcase
 
