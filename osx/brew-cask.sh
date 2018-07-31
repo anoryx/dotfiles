@@ -1,15 +1,11 @@
 apps=(
-    adium
     atext
-    atom
     dashlane
     google-chrome
     iterm2
     spotify
     telegram
-    virtualbox
     vlc
-    vivaldi
 )
 
 brew cask install "${apps[@]}"
