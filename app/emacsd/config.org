@@ -58,6 +58,7 @@
 (customize-set-variable 'tab-width 4)
 #+END_SRC
 
+
 ** y/n > yes/no
 
 #+BEGIN_SRC emacs-lisp
@@ -97,20 +98,32 @@
          ("C-x c SPC" . helm-all-mark-rings)))
 #+END_SRC
 
+
 * Python Environment
 
 ** Elpy
+
 #+BEGIN_SRC emacs-lisp
 (use-package elpy
+  :config
+  (when (require 'flycheck nil t)
+    (remove-hook 'elpy-modules 'elpy-module-flymake)
+    (remove-hook 'elpy-modules 'elpy-module-yasnippet)
+    (remove-hook 'elpy-mode-hook 'elpy-module-highlight-indentation)
+    (add-hook 'elpy-mode-hook 'flycheck-mode))
   (elpy-enable)
   (setq elpy-rpc-backend "jedi")
   (setq python-shell-interpreter "ipython")
   (setq python-shell-interpreter-args "-i --simple-prompt"))
-##+END_SRC
+#+END_SRC
+
 
 ** Flycheck
+
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
+  :init
+  (setq flycheck-check-syntax-automatically '(mode-enabled save))
   :config
   (global-flycheck-mode 1))
-##+END_SRC
+#+END_SRC
