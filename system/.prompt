@@ -74,16 +74,6 @@ parse_git_branch() {
     if [ "$OUT" != "" ]; then echo " $OUT"; fi
 }
 
-python_venv() {
-    if [[ $VIRTUAL_ENV != "" ]]
-        then
-            venv="${P_VIOLET}[${VIRTUAL_ENV##*/}] "
-    else
-        venv=""
-    fi
-    echo "$venv"
-}
-
 prompt_cmd() {
     local EXIT_CODE=$?
     local P_EXIT=""
@@ -102,14 +92,13 @@ prompt_cmd() {
     fi
     
     P_GIT=$(parse_git_branch) 
-	P_VENV=$(python_venv)
 
     # Exit code
     if [[ $EXIT_CODE != 0 ]]; then
         P_EXIT+="${P_RED}✘ "
     fi
 
-    PS1="${P_VENV}${P_USER}${P_CYAN}@${P_HOST}${P_VIOLET}:${P_YELLOW}${P_PWD}${P_GREEN}${P_GIT} ${P_RED}\$ ${P_RESET}"
+    PS1="${P_USER}${P_CYAN}@${P_HOST}${P_VIOLET}:${P_YELLOW}${P_PWD}${P_GREEN}${P_GIT} ${P_RED}\$ ${P_RESET}"
 }
 
 _prompt_cfg
