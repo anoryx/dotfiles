@@ -5,6 +5,7 @@
     ~/.emacs.d: app/emacsd
     ~/.gitconfig: app/gitconfig
     ~/.psqlrc: app/psqlrc
+    ~/.nethackrc: app/nethackrc
     ~/.tmux.conf: app/tmux.conf
     ~/.vim: app/vim/
     ~/.vimrc: app/vimrc

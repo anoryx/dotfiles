@@ -4,3 +4,9 @@
 [submodule "app/vim/vim-pathogen"]
 	path = app/vim/vim-pathogen
 	url = https://github.com/tpope/vim-pathogen.git
+[submodule "app/vim/bundle/vim-monokai"]
+	path = app/vim/bundle/vim-monokai
+	url = https://github.com/sickill/vim-monokai.git
+[submodule "app/vim/bundle/indentLine"]
+	path = app/vim/bundle/indentLine
+	url = https://github.com/Yggdroot/indentLine.git
