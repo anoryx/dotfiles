@@ -74,6 +74,13 @@ set magic "Set magic on, for regular expressions
 set showmatch "Show matching bracets when text indicator is over them
 set mat=2 "How many tenths of a second to blink
 
+" lightline.vim
+set laststatus=2
+set noshowmode
+let g:lightline = {
+    \ 'colorscheme': 'one',
+    \ }
+
 " No sound on errors
 set noerrorbells
 set novisualbell

@@ -10,3 +10,6 @@
 [submodule "app/vim/bundle/indentLine"]
 	path = app/vim/bundle/indentLine
 	url = https://github.com/Yggdroot/indentLine.git
+[submodule "app/vim/bundle/lightline.vim"]
+	path = app/vim/bundle/lightline.vim
+	url = https://github.com/itchyny/lightline.vim
