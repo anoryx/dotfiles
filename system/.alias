@@ -24,5 +24,6 @@ alias sudo='sudo '
 # Other helpful stuff
 alias diff="git diff"
 
-# misc. bullshit
-alias pf="fortune | ponysay"
+function title {
+    echo -ne "\033]0;"$*"\007"
+}

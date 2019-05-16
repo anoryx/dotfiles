@@ -123,13 +123,3 @@ else
         prompt_cmd
     }
 fi
-
-
-
-#if [ "$PS1" ]; then
-#    if [ "$BASH" ]; then
-#    │   PS1="${P_USER}${P_WHITE}@${P_HOST}${P_WHITE}:${P_YELLOW}\w ${P_RED}\$ ${P_RESET}"
-#    else
-#    │   PS1='$ '
-#    fi
-#fi

@@ -2,7 +2,6 @@
 
 - link:
     ~/.bash_profile: system/.bash_profile
-    ~/.emacs.d: app/emacsd
     ~/.gitconfig: app/gitconfig
     ~/.psqlrc: app/psqlrc
     ~/.nethackrc: app/nethackrc
