@@ -75,20 +75,16 @@ unset READLINK CURRENT_SCRIPT SCRIPT_PATH DOTFILE
 
 export SHELL_BASH SHELL_ZSH OS DOTFILES_DIR
 
-# setup pyenv
-source $HOME/.local/bin/virtualenvwrapper.sh
-
-
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 
-# pyenv init
-export WORKON_HOME=$HOME/.virtualenvs
-export PYENV_ROOT=$HOME/.pyenv
+# setup pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init -)"
 fi
 
-if command -v pyenv-virtualenv-init 1>/dev/null 2>&1; then 
-    eval "$(pyenv virtualenv-init -)"; 
+if command -v pyenv-virtualenv-init 1>/dev/null 2>&1; then
+    eval "$(pyenv virtualenv-init -)";
 fi
