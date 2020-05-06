@@ -2,12 +2,16 @@
 
 - link:
     ~/.bash_profile: system/.bash_profile
+    ~/.dircolors: system/.dircolors
     ~/.gitconfig: app/gitconfig
-    ~/.psqlrc: app/psqlrc
     ~/.nethackrc: app/nethackrc
+    ~/.tmux: app/tmux/
     ~/.tmux.conf: app/tmux.conf
     ~/.vim: app/vim/
     ~/.vimrc: app/vimrc
-
+    ~/.vimrc.bundles: app/vimrc.bundles
+- create:
+    - ~/.vim/swaps
+    - ~/.vim/undo
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

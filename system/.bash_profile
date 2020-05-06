@@ -63,9 +63,31 @@ if $SHELL_ZSH; then
     done
 fi
 
-# Set LSCOLORS
+# Some settings from github.com/voku/dotfiles
+for option in autocd globstar cmdhist extglob cdable_vars; do
+    shopt -s "$option" 2> /dev/null
+done
+unset option
 
-eval "$(dircolors "$DOTFILES_DIR"/system/.dircolors)"
+# option to edit an invalid history operation
+shopt -s histreedit;
+
+# append to bash history
+shopt -s histappend
+
+# resize windows-size if needed
+shopt -s checkwinsize
+
+# check if user not root
+if [ "$UID" != 0 ]; then
+    # case-insensitive globbing
+    shopt -s nocaseglob
+    # autocorrect typos in path when cd
+    shopt -s cdspell
+fi
+
+# no autocomplete blank lines
+shopt -s no_empty_cmd_completion;
 
 # Clean up
 
@@ -77,14 +99,3 @@ export SHELL_BASH SHELL_ZSH OS DOTFILES_DIR
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 
-# setup pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-if command -v pyenv 1>/dev/null 2>&1; then
-    eval "$(pyenv init -)"
-fi
-
-if command -v pyenv-virtualenv-init 1>/dev/null 2>&1; then
-    eval "$(pyenv virtualenv-init -)";
-fi

@@ -4,3 +4,9 @@
 [submodule "app/vim/bundle/vim-monokai"]
 	path = app/vim/bundle/vim-monokai
 	url = https://github.com/sickill/vim-monokai.git
+[submodule "app/vim/bundle/Vundle.vim"]
+	path = app/vim/bundle/Vundle.vim
+	url = https://github.com/VundleVim/Vundle.vim.git
+[submodule "app/tmux/plugins/tpm"]
+	path = app/tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm
