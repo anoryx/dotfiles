@@ -256,3 +256,6 @@
     diff = diff-highlight | less
     log = diff-highlight | less
     show = diff-highlight | less
+
+[include]
+    path = .gitconfig.extra
