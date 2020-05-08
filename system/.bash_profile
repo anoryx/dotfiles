@@ -98,4 +98,3 @@ unset READLINK CURRENT_SCRIPT SCRIPT_PATH DOTFILE
 export SHELL_BASH SHELL_ZSH OS DOTFILES_DIR
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
-
