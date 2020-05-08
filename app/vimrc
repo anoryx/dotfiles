@@ -228,7 +228,7 @@ set mat=2
 
 if &t_Co > 2 || has("gui_running")
     try
-        colorscheme monokai
+        colorscheme monokain
     catch /^Vim\%((\a\+)\)\=:E185/
         " not available
     endtry
