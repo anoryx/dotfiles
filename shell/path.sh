@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export PATH="$PATH:/usr/local/go/bin"
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH:/usr/local/go/bin"
 
 # lazy add local bin
 LOCAL_BIN="$HOME/.local/bin"

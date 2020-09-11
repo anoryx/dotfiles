@@ -1,0 +1,34 @@
+$include /etc/inputrc
+"\e[B": history-search-forward
+"\e[A": history-search-backward
+# https://www.topbug.net/blog/2017/07/31/inputrc-for-humans/
+set colored-stats On
+set completion-ignore-case On
+set completion-prefix-display-length 3
+set mark-symlinked-directories On
+set show-all-if-ambiguous On
+set show-all-if-unmodified On
+set visible-stats On
+# https://github.com/voku/dotfiles/blob/master/.inputrc
+# Flip through autocompletion matches with Shift-Tab.
+"\e[Z": menu-complete
+# autocomplete whole word, not just from cursor position
+set skip-completed-text on
+
+# allow utf-8
+set input-meta on
+set output-meta on
+set convert-meta off
+
+# Use Ctrl+← and Ctrl+→ (or Alt/Meta, or Esc) to move between words.
+"\e[1;5D": backward-word
+"\e[1;3D": backward-word
+"\e[5D": backward-word
+"\e\e[D": backward-word
+"\e[1;5C": forward-word
+"\e[1;3C": forward-word
+"\e[5C": forward-word
+"\e\e[C": forward-word
+
+# don't ever beep at me
+set bell-style none

@@ -76,8 +76,8 @@ parse_git_branch() {
 
 python_venv() {
     if [[ $VIRTUAL_ENV != "" ]]
-        then
-            venv="${P_VIOLET}[${VIRTUAL_ENV##*/}] "
+    then
+        venv="${P_VIOLET}[${VIRTUAL_ENV##*/}] "
     else
         venv=""
     fi
@@ -100,9 +100,9 @@ prompt_cmd() {
         P_PWD=${P_PWD:$OFFSET:$MAXLENGTH}
         P_PWD=${TRUNC_SYMBOL}/${P_PWD#*/}
     fi
-    
-    P_GIT=$(parse_git_branch) 
-	P_VENV=$(python_venv)
+
+    P_GIT=$(parse_git_branch)
+    P_VENV=$(python_venv)
 
     # Exit code
     if [[ $EXIT_CODE != 0 ]]; then
