@@ -1,8 +1,9 @@
 - clean: ['~']
 
 - link:
-    ~/.bash_profile: system/.bash_profile
-    ~/.dircolors: system/.dircolors
+    ~/.bash_profile: bash/bash_profile
+    ~/.dircolors: system/dircolors
+    ~/.inputrc: system/inputrc
     ~/.gitconfig: app/gitconfig
     ~/.nethackrc: app/nethackrc
     ~/.tmux: app/tmux/
@@ -10,6 +11,7 @@
     ~/.vim: app/vim/
     ~/.vimrc: app/vimrc
     ~/.vimrc.bundles: app/vimrc.bundles
+    ~/.zshrc: zsh/zshrc
 - create:
     - ~/.vim/swaps
     - ~/.vim/undo
