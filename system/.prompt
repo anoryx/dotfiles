@@ -67,6 +67,8 @@ _prompt_cfg() {
     P_RED=${RED}
     P_RESET=${RESET}
     P_VIOLET=${VIOLET}
+    P_BVIOLET=${BRIGHT_VIOLET}
+    P_BYELLOW=${BRIGHT_YELLOW}
 }
 
 parse_git_branch() {
@@ -84,6 +86,16 @@ python_venv() {
     echo "$venv"
 }
 
+parse_kubectl_context() {
+    if [[ -v KUBECONFIG ]]; then
+        local CONTEXT=$(cat ${KUBECONFIG} | grep "current-context:" | sed "s/current-context: //")
+        if [[ -n "$CONTEXT" ]]; then
+            echo " (k8s: ${CONTEXT}) "
+        fi
+    fi
+}
+
+
 prompt_cmd() {
     local EXIT_CODE=$?
     local P_EXIT=""
@@ -100,16 +112,19 @@ prompt_cmd() {
         P_PWD=${P_PWD:$OFFSET:$MAXLENGTH}
         P_PWD=${TRUNC_SYMBOL}/${P_PWD#*/}
     fi
-    
-    P_GIT=$(parse_git_branch) 
-	P_VENV=$(python_venv)
 
+    local P_GIT=$(parse_git_branch)
+    local P_VENV=$(python_venv)
+    local P_K8S=$(parse_kubectl_context)
     # Exit code
     if [[ $EXIT_CODE != 0 ]]; then
-        P_EXIT+="${P_RED}✘ "
+        P_EXIT+="${P_RED}✘"
+    else
+        P_EXIT+="${P_GREEN}✓"
     fi
-
-    PS1="${P_VENV}${P_USER}${P_CYAN}@${P_HOST}${P_VIOLET}:${P_YELLOW}${P_PWD}${P_GREEN}${P_GIT} ${P_RED}\$ ${P_RESET}"
+    PS1=""
+    PS1+="\n${P_VENV}${P_USER}${P_CYAN}@${P_HOST}${P_VIOLET}:${P_YELLOW}${P_PWD}${P_GREEN}${P_GIT}${P_BYELLOW}${P_K8S}"
+    PS1+="\n${P_EXIT} ${P_BVIOLET}\$ ${P_RESET}"
 }
 
 _prompt_cfg

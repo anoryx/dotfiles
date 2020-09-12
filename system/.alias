@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# short and swet
+# short and sweet
 alias g="git"
 alias h="history"
 
@@ -54,69 +54,69 @@ alias dmesg="dmesg -T"
 # ------------------------------------------------------------------------------
 if [ "$TERM" != "dumb" ]; then
 
-	# dircolors
-	if [[ "$SYSTEM_TYPE" == "LINUX" || "$SYSTEM_TYPE" == "CYGWIN" ]]; then
-    	if [ -s "$HOME/.dircolors" ]; then
-			eval "$(dircolors -b $HOME/.dircolors)"
-    	else
-    		eval "$(dircolors -b)"
-    	fi
-  	fi
-	
-	#enable ls colors
-	if [[ "$DISABLE_LS_COLORS" != "true" ]]; then
-		if [[ "$SYSTEM_TYPE" == "OSX" ]]; then
-			COLORFLAG="-G"
-		elif ls --color -d . &>/dev/null 2>&1; then
-    		COLORFLAG="--color"
-     		if [[ "$SYSTEM_TYPE" == "LINUX" || "$SYSTEM_TYPE" == "CYGWIN" ]]; then
-        		COLORFLAG="--color=auto"
-      		fi
-    	fi
-  	fi
+    # dircolors
+    if [[ "$SYSTEM_TYPE" == "LINUX" || "$SYSTEM_TYPE" == "CYGWIN" ]]; then
+        if [ -s "$HOME/.dircolors" ]; then
+            eval "$(dircolors -b $HOME/.dircolors)"
+        else
+            eval "$(dircolors -b)"
+        fi
+    fi
 
-	# Use "colordiff" or "highlight" to colour diffs.
- 	if command -v colordiff > /dev/null; then
-    	alias difflight="colordiff"
-  	elif command -v highlight > /dev/null; then
-    	alias difflight="highlight --dark-red ^-.* \
-      	| highlight --dark-green ^+.* \
-      	| highlight --yellow ^Only.* \
-      	| highlight --yellow ^Files.*differ$ \
-      	| less -XFIRd"
-  	else
-    	alias difflight="less -XFIRd"
-  	fi
+    #enable ls colors
+    if [[ "$DISABLE_LS_COLORS" != "true" ]]; then
+        if [[ "$SYSTEM_TYPE" == "OSX" ]]; then
+            COLORFLAG="-G"
+        elif ls --color -d . &>/dev/null 2>&1; then
+            COLORFLAG="--color"
+            if [[ "$SYSTEM_TYPE" == "LINUX" || "$SYSTEM_TYPE" == "CYGWIN" ]]; then
+                COLORFLAG="--color=auto"
+            fi
+        fi
+    fi
 
-	# Use GRC for additionnal colorization
-  	if which grc >/dev/null 2>&1; then
-    	alias colour="grc -es --colour=auto"
-    	alias as="colour as"
-    	alias configure="colour ./configure"
-    	alias diff="colour diff"
-    	alias dig="colour dig"
-   		alias g++="colour g++"
-    	alias gas="colour gas"
-    	alias gcc="colour gcc"
-    	alias head="colour head"
-    	alias ifconfig="colour ifconfig"
-    	alias ld="colour ld"
-    	alias ls="colour ls"
-    	alias make="colour make"
-    	alias mount="colour mount"
-    	alias netstat="colour netstat"
-    	alias ping="colour ping"
-    	alias ps="colour ps"
-    	alias tail="colour tail"
-    	alias traceroute="colour traceroute"
-    	alias syslog="sudo colour tail -f -n 100 /var/log/syslog"
-  	fi
+    # Use "colordiff" or "highlight" to colour diffs.
+    if command -v colordiff > /dev/null; then
+        alias difflight="colordiff"
+    elif command -v highlight > /dev/null; then
+        alias difflight="highlight --dark-red ^-.* \
+        | highlight --dark-green ^+.* \
+        | highlight --yellow ^Only.* \
+        | highlight --yellow ^Files.*differ$ \
+        | less -XFIRd"
+    else
+        alias difflight="less -XFIRd"
+    fi
 
-	# replace top with htop
-  	if command -v htop >/dev/null; then
-    	alias top_orig="/usr/bin/top"
-    	alias top="htop"
-  	fi
+    # Use GRC for additionnal colorization
+    if which grc >/dev/null 2>&1; then
+        alias colour="grc -es --colour=auto"
+        alias as="colour as"
+        alias configure="colour ./configure"
+        alias diff="colour diff"
+        alias dig="colour dig"
+        alias g++="colour g++"
+        alias gas="colour gas"
+        alias gcc="colour gcc"
+        alias head="colour head"
+        alias ifconfig="colour ifconfig"
+        alias ld="colour ld"
+        alias ls="colour ls"
+        alias make="colour make"
+        alias mount="colour mount"
+        alias netstat="colour netstat"
+        alias ping="colour ping"
+        alias ps="colour ps"
+        alias tail="colour tail"
+        alias traceroute="colour traceroute"
+        alias syslog="sudo colour tail -f -n 100 /var/log/syslog"
+    fi
+
+    # replace top with htop
+    if command -v htop >/dev/null; then
+        alias top_orig="/usr/bin/top"
+        alias top="htop"
+    fi
 fi
 
 # ------------------------------------------------------------------------------
@@ -160,13 +160,13 @@ alias vdir="ls --format=long $COLORFLAG"
 
 # tree (with fallback)
 if which tree >/dev/null 2>&1; then
-	# displays a directory tree
-	alias tree="tree -Csu"
-  	# displays a directory tree - paginated
-  	alias ltree="tree -Csu | less -R"
+    # displays a directory tree
+    alias tree="tree -Csu"
+    # displays a directory tree - paginated
+    alias ltree="tree -Csu | less -R"
 else
-  	alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
-  	alias ltree="tree | less -R"
+    alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
+    alias ltree="tree | less -R"
 fi
 
 # ------------------------------------------------------------------------------
