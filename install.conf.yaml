@@ -13,6 +13,7 @@
     ~/.vimrc.bundles: app/vimrc.bundles
     ~/.zshrc: zsh/zshrc
 - create:
+    - ~/.vim/backups
     - ~/.vim/swaps
     - ~/.vim/undo
 - shell:
