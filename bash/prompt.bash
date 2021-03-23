@@ -78,8 +78,8 @@ parse_git_branch() {
 
 python_venv() {
     if [[ $VIRTUAL_ENV != "" ]]
-        then
-            venv="${P_VIOLET}[${VIRTUAL_ENV##*/}] "
+    then
+        venv="${P_VIOLET}[${VIRTUAL_ENV##*/}] "
     else
         venv=""
     fi

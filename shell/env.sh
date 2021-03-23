@@ -30,10 +30,6 @@ elif [[ "$(expr substr $(uname -s) 1 9)" == "CYGWIN_NT" ]]; then
   SYSTEM_TYPE="CYGWIN"
 fi
 
-if [[ -n "$(cat /proc/version | grep '(Microsoft@Microsoft.com)')" ]]; then
-  SYSTEM_TYPE="Win10_Linux"
-fi
-
 export SYSTEM_TYPE
 
 ###
@@ -91,7 +87,7 @@ export LC_ALL='en_US.UTF-8';
 
 ### colors
 # try to enable colored output
-if [ -x /usr/bin/dircolors ]; then
+if [ -x /usr/local/opt/coreutils/libexec/gnubin/dircolors ]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
 

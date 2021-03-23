@@ -31,6 +31,9 @@ alias rd="rmdir"
 # dirs
 alias d="dirs -v | head -10"
 
+# watch anything
+alias watch="watch "
+
 # Enable aliases to be sudo’ed
 alias sudo='sudo '
 alias _='sudo'

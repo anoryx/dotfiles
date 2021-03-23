@@ -30,6 +30,8 @@ Plugin 'tpope/vim-surround'
 """"""""""""""""""""""""
 Plugin 'ervandew/supertab'
 """"""""""""""""""""""""
+Plugin 'sheerun/vim-polyglot'
+""""""""""""""""""""""""
 Plugin 'flazz/vim-colorschemes'
 """"""""""""""""""""""""
 Plugin 'vim-airline/vim-airline'
