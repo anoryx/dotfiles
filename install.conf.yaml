@@ -12,6 +12,7 @@
     ~/.vimrc: app/vimrc
     ~/.vimrc.bundles: app/vimrc.bundles
     ~/.zshrc: zsh/zshrc
+    ~/.config/starship.toml: app/starship.toml
 - create:
     - ~/.vim/swaps
     - ~/.vim/undo

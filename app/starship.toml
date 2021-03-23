@@ -1,0 +1,100 @@
+format = """
+╭─\
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$golang\
+$python\
+$kubernetes\
+$terraform\
+$aws\
+$env_var\
+$custom\
+$cmd_duration\
+$line_break\
+╰─\
+$time\
+$status\
+$character"""
+
+[aws]
+style = "bold cyan"
+
+[cmd_duration]
+format = "took [$duration]($style) "
+style = "yellow"
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+format = "[$path]($style)[$read_only]($read_only_style) "
+style = "bold purple"
+truncation_symbol = ""
+home_symbol = "~"
+
+[git_branch]
+format = "[$symbol$branch]($style)"
+style = "yellow"
+symbol = ""
+truncation_symbol = ""
+
+[git_commit]
+format = '[\($hash\)]($style)[($tag)]($style)'
+style = "yellow"
+tag_disabled = false
+tag_symbol = "🔖 "
+
+[git_state]
+style = "bold red"
+
+[git_status]
+# remove '$stashed'
+format = '([\[$conflicted$deleted$renamed$modified$staged$untracked$ahead_behind\]]($style) ) '
+style = "bold red"
+ahead = "⬆️  ${count}"
+diverged = "⬆️  ${ahead_count} ⬇️  ${behind_count}"
+behind = "⬇️  ${count}"
+
+[golang]
+style = "bold blue"
+format = "with [$symbol($version )]($style)"
+
+[hostname]
+ssh_only = true
+format = "[@$hostname]($style) "
+style = "bold green"
+
+[kubernetes]
+disabled = false
+symbol = "⛵️"
+format = '[($symbol$context)(:$namespace)]($style) '
+style = "cyan bold"
+
+[kubernetes.context_aliases]
+"oz-oz_development-eks-cluster" = "dev"
+"oz-oz_stage-eks-cluster" = "stage"
+"oz-oz_production-eks-cluster" = "prod"
+
+[python]
+format = 'with [${symbol}${pyenv_prefix}(${version} )($virtualenv)]($style)'
+style = "blue bold"
+
+[terraform]
+format = "with [$symbol$workspace]($style) "
+symbol = "⛰ "
+style = "bold cyan"
+
+[time]
+disabled = false
+format = "[$time]($style) "
+time_format = "%T"
+style = "dimmed green"
+
+[username]
+style_root = "bold red"
+style_user = "bold green"
+format = "[$user]($style)"
