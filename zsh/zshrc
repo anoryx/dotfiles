@@ -1,6 +1,5 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-
 # Path to your oh-my-zsh installation.
 export ZSH="/home/sfd/.oh-my-zsh"
 
@@ -8,7 +7,6 @@ export ZSH="/home/sfd/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="bira"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -73,11 +71,14 @@ plugins=(
     fzf
     git
     kubectl
+    kube-ps1
+    poetry
     zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
 
+ZSH_THEME="bira-plus"
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -104,7 +105,12 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# autocompletion
+autoload -U compinit && compinit
+
+
 # Shell dotfiles
+DOTFILES_DIR=${HOME}/.dotfiles
 for DOTFILE in "$DOTFILES_DIR"/shell/{function,path,env,alias,completion,grep,prompt,custom}.sh; do
     [ -f "$DOTFILE" ] && . "$DOTFILE"
 done
@@ -120,6 +126,9 @@ fi
 for DOTFILE in "$DOTFILES_DIR"/zsh/*.zsh; do
         [ -f "$DOTFILE" ] && . "$DOTFILE"
 done
+
+# Make path entries unique
+typeset -aU path
 
 # Starship.rs
 eval "$(starship init zsh)"

@@ -1,12 +1,17 @@
-#!/usr/bin/env bash
-
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH:/usr/local/go/bin"
+export PATH="$PATH:/usr/local/go/bin"
 
 # lazy add local bin
 LOCAL_BIN="$HOME/.local/bin"
-if [ -d $LOCAL_BIN ]; then
-  export PATH="$PATH:$LOCAL_BIN"
+if [[ -d $LOCAL_BIN ]]; then
+  export PATH="$LOCAL_BIN:$PATH"
 fi
+
+GOPATH="$HOME/go"
+if [[ -d $GOPATH ]]; then
+    export GOPATH
+    export PATH="$GOPATH/bin:$PATH"
+fi
+
 
 # pyenv settings
 #

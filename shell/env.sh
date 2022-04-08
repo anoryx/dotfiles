@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+########!/usr/bin/env bash
 
 ### Detect your OS
 case "$OSTYPE" in
@@ -87,7 +87,7 @@ export LC_ALL='en_US.UTF-8';
 
 ### colors
 # try to enable colored output
-if [ -x /usr/local/opt/coreutils/libexec/gnubin/dircolors ]; then
+if [ -x dircolors ]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
 

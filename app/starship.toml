@@ -36,6 +36,11 @@ style = "bold purple"
 truncation_symbol = ""
 home_symbol = "~"
 
+[env_var.TAG]
+format = "🏷  [$env_value]($style) "
+style = "yellow dimmed"
+variable = "TAG"
+
 [git_branch]
 format = "[$symbol$branch]($style)"
 style = "yellow"

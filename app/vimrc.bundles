@@ -38,6 +38,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
 """"""""""""""""""""""""""
+Plugin 'ekalinin/Dockerfile.vim'
 """"""""""""""""""""""""""
 call vundle#end()
 filetype plugin indent on
