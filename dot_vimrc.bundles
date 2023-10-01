@@ -1,0 +1,44 @@
+" make sure .vim/bundle works
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+
+""""""""""""""""""""""""
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+
+let NERDTreeShowHidden=1
+
+" Open a NERDTree automatically when vim starts up if no files were specified.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" Close vim and NERDTree if no file is open and we try to close vim.
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+" Toggle the NERDTree e.g. with ",-".
+nnoremap <leader>- :NERDTreeToggle<CR>
+
+""""""""""""""""""""""""
+Plugin 'tpope/vim-surround'
+
+" usage
+" - e.g.: cs'" -> for ' -> "
+" - e.g.: cs"' -> for " -> '
+""""""""""""""""""""""""
+Plugin 'ervandew/supertab'
+""""""""""""""""""""""""
+Plugin 'sheerun/vim-polyglot'
+""""""""""""""""""""""""
+Plugin 'flazz/vim-colorschemes'
+""""""""""""""""""""""""
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+""""""""""""""""""""""""""
+Plugin 'ekalinin/Dockerfile.vim'
+""""""""""""""""""""""""""
+call vundle#end()
+filetype plugin indent on
