@@ -1,0 +1,8 @@
+theme = "molokai"
+
+[editor]
+true-color = true
+
+[editor.whitespace]
+render = "none"
+

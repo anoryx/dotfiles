@@ -37,7 +37,7 @@ truncation_symbol = ""
 home_symbol = "~"
 
 [env_var.TAG]
-format = "🏷  [$env_value]($style) "
+format = "🏷   [$env_value]($style) "
 style = "yellow dimmed"
 variable = "TAG"
 
@@ -90,7 +90,7 @@ style = "blue bold"
 
 [terraform]
 format = "with [$symbol$workspace]($style) "
-symbol = "⛰ "
+symbol = "⛰  "
 style = "bold cyan"
 
 [time]

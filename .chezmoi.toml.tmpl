@@ -1,0 +1,12 @@
+{{ $name := promptString "name" -}}
+{{ $email := promptString "email" -}}
+
+{{- $osid := .chezmoi.os -}}
+{{- if hasKey .chezmoi.osRelease "id" -}}
+    {{-   $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{- end -}}    
+
+[data]
+email = {{ $email | quote }}
+name = {{ $name | quote }}
+osid = {{ $osid | quote }}

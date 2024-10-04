@@ -1,0 +1,15 @@
+/require world-q.tf
+/set hiliteattr=xCmagenta
+; /hilite_page
+; /hilite_whisper
+/set wrapspace=2
+
+/require ~/.tinyfugue/bufftools.tf
+/require ~/.tinyfugue/sepchat.tf
+
+/set matching=regexp
+
+/def -Fp1 -hACTIVITY -ahCBLUE
+
+/addworld -T'tiny.muck' fm furrymuck.com 8888
+/addworld -x -T'tiny.muck' sd spindizzy.org 7073
