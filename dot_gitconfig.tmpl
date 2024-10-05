@@ -1,0 +1,268 @@
+[user]
+    name = "{{ .name }}"
+    email = "{{ .email }}"
+
+[core]
+    editor = hx
+    whitespace = trailing-space,space-before-tab,indent-with-non-tab
+    excludesfile = ~/.gitignore_global
+
+    # Make `git rebase` safer on OS X
+    # More info: http://www.git-tower.com/blog/make-git-rebase-safe-on-osx
+    trustctime = false
+
+    # Prevent showing files whose names contain non-ASCII symbols as unversioned.
+    # http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
+    precomposeunicode = false
+
+    # Speed up commands involving untracked files such as `git status`.
+    # https://git-scm.com/docs/git-update-index#_untracked_cache
+    untrackedCache = true
+
+    # https://stackoverflow.com/questions/18257622/why-is-git-core-preloadindex-default-value-false/18259086
+    preloadindex = true
+
+[alias]
+    # add
+    a = add
+    aa = add --all
+    add = add -v
+
+    # show aliases
+    aliases = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
+
+    # amend currently staged files to last commit
+    # see `git help commit`
+    amend = commit --amend --reuse-message=HEAD
+
+    # branch
+    b = branch -v
+
+    # delete branch if merged
+    # see `git help branch`
+    bd = branch --delete
+    bm = branch --merged
+    branches = branch -a
+
+    # commit
+    c = commit -m           # commit with message
+    ca = commit -am         # commit all with message
+    ci = commit             # commit
+
+    # checkout
+    co = checkout
+    nb = checkout -B        # create and switch to new branch
+
+    # cherry-pick
+    cp = cherry-pick -x
+
+    # clone including submodules
+    cl = clone --recursive
+
+    # delete all untracked
+    # see `git help clean`
+    cleanit = clean -fd
+
+    # config
+    cn = config             # `git help config`
+    cng = config --global   # global config
+
+    # List contributors with number of commits
+    contributors = shortlog --summary --numbered
+
+    # diff
+    d = diff                # diff unstaged changes
+    dc = diff --cached      # diff staged changes
+    da = diff HEAD          # diff unstaged and staged changes
+
+    # Show all conflicted
+    diff-conflicted-files = diff --name-only --diff-filter=U
+
+    # Show diff between latest commit and current state
+    diff-to-latest-commit = "!git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+
+    # Pull remote changes for repo and submodules
+    p = !"git pull; git submodule foreach git pull origin master"
+
+    # difftool
+    dt = difftool --no-prompt               # diff working tree to HEAD
+    dtc = difftool --cached --no-prompt     # diff staging area to HEAD
+
+    # fetch
+    f = fetch
+
+    # find
+    ## find branches containing commit
+    fb = "!f() { git branch -a --contains $1; }; f"
+
+    ## find commits by source code
+    fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+
+    ## find commits by commit message
+    fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
+
+    ## find tags containing commit
+    ft = "!f() { git describe --always --contains $1; }; f"
+
+    # help
+    h = help
+
+    # log
+    l = log --graph --decorate --date=short
+    changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
+    short = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
+    simple = log --pretty=format:\" * %s\"
+    shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
+    overview = log --all --oneline --no-merges
+    changelog = "!sh -c \"git log --oneline --no-merges $1..HEAD\" -"
+    filelog = log -u # show changes to a file
+    recap = log --all --oneline --no-merges --author=sfd@extrahop.com
+    graph = log --all --oneline --no-merges --decorate --date=iso --graph
+
+    # Pretty log of commits. Supports options of git log
+    # https://www.kernel.org/pub/software/scm/git/docs/git-log.html#_pretty_formats
+    log-pretty = log --graph --decorate --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an - %aE>%Creset' --abbrev-commit
+
+    # Pretty log of commits from origin/master
+    log-origin-main = log --decorate --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an - %aE>%Creset' --abbrev-commit --no-merges origin/main
+
+    # last commit
+    last = log -1 HEAD
+
+    # ls alias
+    ls = ls-files
+
+    # merge
+    m = merge
+
+    ## show not-merged branches compared to current
+    nm = branch --no-merged
+    ## show not-merged branched compared to master
+    nmm = branch --no-merged master
+
+    # pull
+    pl = pull
+
+    # s/blame/praise/
+    praise = blame
+
+    # push
+    ps = push
+
+    # remote
+    r = remote -v
+
+    #via http://stackoverflow.com/questions/5188320/how-can-i-get-a-list-of-git-branches-ordered-by-most-recent-commit
+    recent-branches = "!git for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'"
+
+    # update all remotes
+    ru = remote update
+
+    # rebase
+    rc = rebase --continue  # continue rebase
+    rs = rebase --skip      # skip rebase
+    # Add an 'amend with signing' action to each commit in range
+    sign = rebase --exec 'git commit --amend --no-edit -n -S' -i
+    # reset
+    unstage = reset HEAD            # remove files from index (tracking)
+    uncommit = reset --soft HEAD^   # go back before last commit
+    mt = mergetool
+
+    # status
+    s = status -s
+    st = status
+
+    # shortlog
+    shl = shortlog
+
+    # stash
+    ss = stash              # stash changes
+    sl = stash list         # list stashes
+    sa = stash apply        # apply stash (restore changes)
+    sd = stash drop         # drop stash (destroy changes)
+
+    # tag
+    t = tag -n          # show n lines of tag msg
+    tags = tag -l       # verbose output
+
+[color]
+    # use colors when possible
+    ui = auto
+    diff = auto
+    status = auto
+    branch = auto
+    interactive = auto
+    pager = true
+
+[color "branch"]
+    # Highlight current. Yellow local branches; Green remotes.
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    # Yellow meta; Magenta line info; Red for deleltions; Green for additions.
+    meta = yellow
+    frag = magenta              # line info
+    old = red                   # deletions
+    new = green                 # additions
+    whitespace = red reverse
+
+[color "status"]
+    # Changed files are yellow.
+    # Staged files are green.
+    # New (untracked) files are cyan.
+    # Headers are gray (white dimmed)
+    # Branch is always green even in headers
+    added = green
+    branch = green
+    changed = yellow
+    header = white dim
+    untracked = cyan
+
+[diff]
+    # Use more time to create better diffs.
+    # E.g. matching opening/closing braces from neighbour functions.
+    # See "`git help diff` --patience" and "`git help merge` recursive".
+    algorithm = patience
+
+    # (git 2.9+) Set this option to `true` to enable an experimental heuristic that
+    # shifts the hunk boundary in an attempt to make the resulting
+    # patch easier to read.
+    compactionHeuristic = true
+
+    renamelimit = 9999
+
+    color = auto
+
+    # Tells git to detect renames. If set to any boolean value,
+    # it will enable basic rename detection. If set to "copies" or "copy",
+    # it will detect copies, as well.
+    renames = copies
+
+[status]
+    color = auto
+
+[push]
+    default = simple
+
+[merge]
+    tool = vimdiff
+
+    # Always show a diffstat at the end of a merge
+    stat = true
+
+    # Git has an option to display merge conflicts in diff3 format (by default it only displays the two files to be merged).
+    conflictstyle = diff3
+
+    # Include summaries of merged commits in newly created merge commit messages
+    log = true
+
+[log]
+    decorate = short
+
+[pager]
+    color = true
+    diff = diff-so-fancy | less
+    log = diff-so-fancy | less
+    show = diff-so-fancy | less

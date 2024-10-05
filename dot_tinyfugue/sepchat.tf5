@@ -1,0 +1,319 @@
+;; sepchat.tf v0.11
+;; current as of 2020-06-14
+;; by Pyro @ furrymuck
+;;
+;; This file is written specifically for FurryMUCK, but should work with
+;; any tinymuck server which uses whisper and page programs producing the
+;; same formats, and others with appropriate modifications.
+;; It diverts incoming page and whisper conversations to a connectionless
+;; socket, one per conversation. It will automatically keep track of whether
+;; the last message was a page or a whisper, and reply in kind.
+;;
+;; You will need to use a prepend for whisper, and a standard format for page.
+;; To set these in FurryMUCK (and many others), use:
+;;    /schat_setup
+;; OR manually issue the following two commands:
+;;     whisper #prepend [Schat]
+;;     page #standard [Schat] %N pages, "%m" to %t.
+;;
+;;
+;; You must also be sure to define your worlds with type 'tiny.muck' or these
+;; macros will never trigger! For instance, add or edit like the following line
+;; in your .tfrc
+;; /addworld -Ttiny.muck Char@World character password muck.example.com 8888
+;;
+;;
+;; This file uses the qsort macro from the sorting routine found at
+;;    http://sourceforge.net/p/tinyfugue/mailman/message/6109286/
+;; renamed /schat_qsort to avoid conflicts where someone already has
+;; the library loaded and/or modified.
+;; 
+;; ############
+;; ## USAGE: ##
+;; ############
+;; Simple setup on most fbmuck-based servers: /schat_setup
+;;
+;; To send reply messages from the schat socket, simply use " or : as you
+;; would for ordinary public speech and posing. The following commands
+;; are also available:
+;;
+;; /scd         disconnect from the schat socket and foreground
+;;              whatever socket is next.
+;;
+;; /scdu        disconnect from the schat socket and foreground
+;;              whatever socket is next; then, unworld the schat
+;;              socket and unset its mode variable.
+;;
+;; /scmode <mode>  Force the next message to be sent with the specified
+;;              mode (IE: 'page' or 'whisper'). Note that at this time,
+;;              any incoming message after the /scmode command will
+;;              override this. Working on this.
+;;
+;;
+
+/loaded _sepchat_0.11.tf
+/require lisp.tf
+
+; ###############
+; ## Variables ##
+; ###############
+; Sepchat version number:
+/set schat_version=0.11
+
+; When sending a command for the main world from an schat socket, setting this
+; to 1 will cause that world to be foregrounded as soon as the text is sent to
+; the server. Default is disabled; uncomment or set in-client to enable.
+;/set schat_foreground_when_sending=1
+
+; The Sepchat system requires a prepend "[Schat]" in order to detect whispers
+; and pages. Since you probably don't want to see these, they are disabled by
+; default. Uncomment this or set in-client to see the "[Schat]" tag anyway.
+;/set schat_show_prepend=1
+
+; ##############################
+; ## Simplified initial setup ##
+; ##############################
+/def schat_setup = \
+        /send whisper #prepend [Schat]%; \
+        /send p #standard [Schat] %%n pages, "%%m" to %%t.
+
+; #################################################
+; ## Gag whispers and pages to the main world(s) ##
+; #################################################
+/def -p1 -ag -mregexp -T'tiny.*' -t'^\[Schat\] .*' schat_gag
+
+; ###########################################################################
+; ## Trigger on incoming messages to check whether the schat socket exists ##
+; ## and create it if it does not.                                         ##
+; ###########################################################################
+/def -i -Fp1000 -mregexp -T'tiny.*' -t'^\[Schat\] ([^[:space:]]+) (page[s]?|page-pose|whisper[s]?), (.*) to (.+)\.?$' \
+    schat_trap =  \
+        /let n_list $[replace(" ", ",",schat_namelist(strcat({P1}," ",{P4})))]%;  \
+        /schat_check [${world_name}]:%n_list
+
+; ###################################################################
+; ## Trigger on incoming messages and send them to the appropriate ##
+; ## schat socket                                                  ##
+; ###################################################################
+/def -i -Fp999 -mregexp -T'tiny.*' -t'^\[Schat\] ([^[:space:]]+) (page[s]?|page-pose|whisper[s]?), (.*) to (.+)\.?$' \
+    schat_mesg_trap =  \
+        /let n_list $[replace(" ", ",",schat_namelist(strcat({P1}," ",{P4})))]%;  \
+        /if /test (schat_show_prepend == 1) %; /then /let mesg %* %; /else /let mesg %-1 %; /endif %; \
+        /let mode=$[substr({P2},0,4)] %;  \
+        /set SC$[textencode(strcat("[", ${world_name}, "]:", {n_list}))]=%mode %;  \
+        /schat_message [${world_name}]:%n_list %mesg
+
+; ###########################################################
+; ## Insert the prepend on pages/whispers YOU send so they ##
+; ## trigger the schat                                     ##
+; ###########################################################
+/def -i -Fp1002 -mregexp -T'tiny.*' -t'^(You (whisper|page).+)$' \
+    schat_insert_prepend = \
+        /test substitute(strcat("[Schat] ",{P0}))
+
+; #########################################################################
+; ## Disconnect and unworld the schat socket. This destroys the socket,  ##
+; ## its history, and the mode variable, and foregrounds the next socket ##
+; #########################################################################
+/def scdu = \
+    /let scworldname=${world_name}%; \
+    /if /test world_info("type") =~ 'schat' %; /then \
+        /unset SC$[textencode({scworldname})]%; \
+        /dc %scworldname %; \
+        /repeat -1 1 /unworld %scworldname%; \
+    /endif %; \
+    /fg ->
+
+; ###########################################################################
+; ## Disconnect the schat socket, but don't unworld it. This leaves its    ##
+; ## history and the mode variable intact, and foregrounds the next socket ##
+; ###########################################################################
+/def scd =  \
+    /let scworldname=${world_name}%;  \
+    /if /test world_info("type") =~ 'schat' %; /then  \
+        /dc %scworldname %;  \
+    /endif  %;  \
+    /fg ->
+
+; ######################################################################
+; ## Force the next message you send to be sent with a specified mode ##
+; ## NOTE: This function is not yet complete!                         ##
+; ######################################################################
+/def scmode = \
+    /set $[textencode(strcat("SC",world_info()))]=%1%; 
+
+/def scpg = /scmode page
+
+; ##############################################################
+; ## Check whether an schat socket exists. If not, create it. ##
+; ##############################################################
+/def -i schat_check =  \
+    /if /test $[is_open({1})] != 1 %;  \
+        /then /echo % Creating new sepchat %1%;  \
+        /schat_add %1%;  \
+    /endif
+
+; ###################################
+; ## Actually add the schat socket ##
+; ###################################
+/def -i schat_add =  \
+    /addworld -e -T"schat" %1%;  \
+    /connect -b %1%;
+
+; #################################################
+; ## Send an incoming message to an schat socket ##
+; #################################################
+/def -i schat_message = /send -w%1 %-1
+
+
+; #######################################################
+; ## Build the list of names for the schat socket name ##
+; #######################################################
+/def -i schat_namelist =  \
+    /let temp $[replace(",", "", tolower({*}))] %;  \
+    /if (strchr({temp}, ".", -1) != -1) /let temp=$[substr({temp}, 0, -1)]%; /endif%; \
+    /let temp $(/schat_qsort strcasecmp $(/unique $(/remove and $(/remove you %temp)))) %;  \
+    /result replace("  ", " ","%temp")
+
+; ####################################
+; ## Return the mode (page/whisper) ##
+; ####################################
+/def -i schat_getmode = /return %1
+
+; #######################################################################
+; ## hook outgoing messages beginning with [:;] and send a pose to the ##
+; ## world associated with the schat                                   ##
+; #######################################################################
+/def -i -Fp100 -mregexp -T'schat' -h'SEND ^( )*([:;].*)' \
+    schat_send_pose = \
+        /let message=%{P2}%; \
+        /schat_getmode $[textencode(strcat("SC",world_info()))]%; \
+        /let mode=%?%; \
+        /test $[regmatch("\[(.+)\]:(.+)",world_info())]%; \
+        /test $[send(strcat({mode}, " ", replace(",", " ", {P2}), "=", {message}),{P1},"h")]
+
+; ##########################################################################
+; ## hook outgoing messages beginning with " and send a pose to the world ##
+; ## associated with the schat. This is different from posing, because    ##
+; ## posing requires the [:;] character, while pose "say" does not        ##
+; ## require the "                                                        ##
+; ##########################################################################
+/def -i -Fp100 -mregexp -T'schat' -h'SEND ^( )*\"(.*)' \
+    schat_send_say = \
+        /let message=%{P2}%; \
+        /schat_getmode $[textencode(strcat("SC",world_info()))]%; \
+        /let mode=%?%; \
+        /test $[regmatch("\[(.+)\]:(.+)",world_info())]%; \
+        /test $[send(strcat({mode}, " ", replace(",", " ", {P2}), "=", {message}),{P1},"h")]
+
+; ##########################################################################
+; ## hook outgoing messages not beginning with " or [:;] and send them to ##
+; ## the world dassociated with the schat as-is. This permits you to send ##
+; ## messages to the main world from an schat without needing to switch   ##
+; ##########################################################################
+/def -i -Fp100 -mregexp -T'schat' -h'SEND ^( )*[^\\":;[:space:]](.*)' \
+    schat_send_other = \
+        /let message=%{P0}%; \
+        /test $[regmatch("\[(.+)\]:(.+)",world_info())]%; \
+        /test $[send({*},{P1},"h")]%; \
+        /if /test (schat_foreground_when_sending == 1) %; /then /fg %{P1}%; /endif
+
+; ########################################################################### 
+; ## hook blank lines sent from an schat and suppress them from showing up ##
+; ## in the sepchat socket. This is cosmetic.                              ##
+; ########################################################################### 
+/def -i -p10000 -mregexp -T'schat' -h'SEND ^( )*$' schat_send_nothing=/test
+
+; ########################################################
+; ## Suppress annoying background trigger notifications ##
+; ########################################################
+/def -p10 -ag -mglob -T'tiny.*' -hBGTRIG schat_bgtrig_gag
+
+; ##########################################################################
+; ## Sorting function.                                                    ##
+; ## Source: http://sourceforge.net/p/tinyfugue/mailman/message/6109286/  ##
+; ##########################################################################
+/def -i schat_qsort = \
+    /if ({#} <= 2) \
+        /_echo %{-1}%; \
+    /else \
+        /let compare=%{1}%;\
+        /shift%;\
+        /let key=%{1}%;\
+        /let same=%;\
+        /let small=%;\
+        /let large=%;\
+        /let diff=%;\
+        /while ({#}) \
+            /test diff:=%compare({1}, key)%;\
+            /if (!diff) \
+                /let same=%same %1%; \
+            /elseif (diff < 0) \
+                /let small=%small %1%; \
+            /else \
+                /let large=%large %1%; \
+            /endif%; \
+            /shift%; \
+        /done%; \
+        /_echo $(/schat_qsort %compare %small) %same $(/schat_qsort %compare %large)%; \
+    /endif
+
+
+; ###################################################################################
+; ## Case-insensitive string comparison. Returns like strcmp, but case insensitive ##
+; ###################################################################################
+/def -i strcasecmp = /test strcmp(tolower({1}), tolower({2}))
+
+
+
+; #########################################################################
+; ## If we're in a sepchat (or screamch) socket, go to the server socket ##
+; ## associated with the sepchat/screamch. Otherwise, cycle through the  ##
+; ## tiny.* server sockets that are connected                            ##
+; #########################################################################
+/def -i cycle_main_worlds = \
+        /let worlds=$(/listsockets -sTtiny*)%; \
+        /let worlds=%{worlds} %{worlds}%; \
+        /let pos=$[strstr({worlds},strcat(" ",${world_name}," "))]%; \
+        /let worlds=$[substr({worlds},{pos})]%; \
+        /let next=$(/nth 2 %{worlds})%; \
+        /fg %{next}%;
+
+/def -i cycle_or_goto_main_worlds = \
+        /if (regmatch("(schat|screamch)", ${world_type})) \
+                /test $[regmatch("^S?\[(.+)\]", ${world_name})]%; \
+                /fg %{P1}%; \
+        /else \
+                /cycle_main_worlds%; \
+        /endif
+
+
+; ###########################################################
+; ## Bind esc W (Alt+W) to cycling macros. Case-sensitive ##
+; ###########################################################
+/def -i -b'^[W' = /cycle_or_goto_main_worlds
+
+
+
+; #############################################################################
+; ## If a (dis)connection is received in a main world, search through a list ##
+; ## of active schat sockets for any containing the name of the player who   ##
+; ## has (dis)connected and relay the message there--so we can tell when     ##
+; ## they've disconnected/reconnected without having to switch back to the   ##
+; ## main world. This requires them to be in the same room or in watchfor.   ##
+; #############################################################################
+/def -Fp100 -i -mregexp -T'tiny.*' -t'^(Somewhere on the muck, )?(.+)( has (dis)?connected.)$' schat_conn_event = \
+  /let _world=${world_name}%;\
+  /let _name=$[tolower({P2})]%;\
+  /let _message=%{P0}%;\
+  /let l=\\[%{_world}\\]:(.+,)*(%{_name})(,.*|$$)%;\
+  /let w_list=$(/listworlds -Tschat -s -mregexp %{l})%;\
+  /schat_conn_event_notify -n$[textencode({_name})] -m'$[textencode({_message})]' %{w_list}
+
+/def -i schat_conn_event_notify = \
+  /if (!getopts("n:m:")) /return 0%; /endif%;\
+  /while ({#}) \
+    /if (is_open({1})) /send -w%{1} $[textdecode({opt_m})]%;/endif%;\
+    /shift%;\
+  /done
+

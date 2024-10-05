@@ -1,0 +1,64 @@
+[packages]
+
+taps = [
+    "homebrew/bundle",
+]
+
+[packages.darwin]
+brews = [
+    "antigen",
+    "bat",
+    "coreutils",
+    "cowsay",
+    "diff-so-fancy",
+    "eza",
+    "figlet",
+    "fortune",
+    "gh",
+    "git",
+    "git-extras",
+    "helix",
+    "htop",
+    "imagemagick",
+    "lolcat",
+    "nmap",
+    "pyenv",
+    "ripgrep",
+    "starship",
+    "tig",
+    "tmux",
+    "tpm",
+    "tree",
+    "wget",
+    "zsh",
+]
+casks = ["bartender", "font-hack", "font-hack-nerd-font", "iterm2"]
+
+[packages.ubuntu]
+brews = [
+    "antigen",
+    "bat",
+    "coreutils",
+    "cowsay",
+    "diff-so-fancy",
+    "eza",
+    "figlet",
+    "fortune",
+    "gh",
+    "git",
+    "git-extras",
+    "helix",
+    "htop",
+    "imagemagick",
+    "lolcat",
+    "nmap",
+    "pyenv",
+    "ripgrep",
+    "starship",
+    "tig",
+    "tmux",
+    "tpm",
+    "tree",
+    "wget",
+    "zsh",
+]

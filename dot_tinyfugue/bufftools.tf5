@@ -1,0 +1,63 @@
+;; bufftools-1.6.tf (version 1.6)
+;; current as of 2018-10-23
+;; by Pyro @ furrymuck
+;; Buffer Tools: implements independent input buffers per socket.
+
+
+/loaded _bufftools-1.6.tf
+/set bufftools_version=1.06
+
+
+;; Show a list of the stored buffer contents.
+/def -i bt_listbuffers = /listvar BT_*
+
+
+;; Recall the text that was still stored when we switched to this socket,
+;; undoing any changes that have been made. Below, this is bound to the
+;; ESC_r key (Note: lower case R). This is equivalent to ALT+r on my
+;; system.
+
+/def -i bt_recall_this = \
+    /let text=$(/eval /echo %%BT_$[textencode(${world_name})]_buffer)%;\
+    /let pos=$(/eval /echo %%BT_$[textencode(${world_name})]_cursor)%;\
+    /if (strlen(pos) == 0) /let pos=0%;/endif%;\
+    /grab %text%;/test kbgoto(%pos)
+
+
+;; When the world hook fired (IE, the socket in the foreground changes) get the
+;; current cursor position in the input buffer, then move the cursor to the
+;; beginning and get the contents of the input buffer.
+;; If the buffer wasn't empty, then set the _buffer variable for this world
+;; as well as the _cursor, so we save the text and the cursor position within
+;; the text.  If there was no text, then clear these values so nothing old
+;; gets restored on the off chance that there's somethin stored.
+;; Once we've done that, get any text that's stored for the socket we just
+;; switched to, and stick it in the input buffer. Then get the cursor position
+;; and move the cursor so we can pick up editing right where we left off
+/def -Fp0 -hWORLD -i bt_swap = \
+    /let pos=$[kbpoint()]%;\
+    /test $[kbgoto(0)]%;\
+    /let world=$[textencode({BT_worldid})]%;\
+    /if (strlen(kbtail()) != 0) \
+        /set BT_%{world}_buffer=$[kbtail()]%;\
+        /set BT_%{world}_cursor=%{pos}%;\
+        /test $[kbdel(kblen())]%;\
+    /else \
+        /unset BT_%{world}_buffer%;\
+        /unset BT_%{world}_cursor%;\
+    /endif %;\
+    /let text=$(/eval /echo %%BT_$[textencode(${world_name})]_buffer)%;\
+    /grab %text%;\
+    /let pos=$(/eval /echo %%BT_$[textencode(${world_name})]_cursor)%;\
+    /if (pos != 0) \
+        /test kbgoto(%{pos})%;\
+    /endif%;\
+    /set BT_worldid=${world_name}
+
+;; Bind some keys.
+/def -i -q key_esc_up=/test $[morescroll(-1)]
+/def -i -q key_esc_down=/test $[morescroll(1)]
+/def -i -q key_esc_r=/bt_recall_this
+/def -i -b'^[r' = /key_esc_r
+
+
