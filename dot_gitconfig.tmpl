@@ -3,7 +3,7 @@
     email = "{{ .email }}"
 
 [core]
-    editor = hx
+    editor = vim
     whitespace = trailing-space,space-before-tab,indent-with-non-tab
     excludesfile = ~/.gitignore_global
 
@@ -154,6 +154,9 @@
 
     #via http://stackoverflow.com/questions/5188320/how-can-i-get-a-list-of-git-branches-ordered-by-most-recent-commit
     recent-branches = "!git for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'"
+
+    # rev
+    rev = "!f(){ BRANCH=\"$(git rev-parse --abbrev-ref HEAD)\"; git push -u origin \"$BRANCH\":user/sfd/\"$BRANCH\" --force; }; f"
 
     # update all remotes
     ru = remote update

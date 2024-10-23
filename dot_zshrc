@@ -2,15 +2,13 @@
 
 # zsh autoload
 autoload -Uz compinit promptinit
-compinit
+### only load compinit once a day
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
+compinit -C
+###
 promptinit
-
-# starship
-eval "$(starship init zsh)"
-
-# load antigen plugins
-source ~/.zsh/antigen.zsh
-antigen init "$HOME/.antigenrc"
 
 # load zsh config
 typeset -U config_files
@@ -26,3 +24,15 @@ typeset -aU path
 # setup homebrew
 test -d /home/linuxbrew/.linuxbrew \
     && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# load antidote plugins
+source "$(brew --prefix)/opt/antidote/share/antidote/antidote.zsh"
+antidote load
+
+# starship
+eval "$(starship init zsh)"
+
+# optionally load work stuff
+if [ -f "$HOME/.custom.zsh" ]; then
+  source "$HOME/.custom.zsh"
+fi

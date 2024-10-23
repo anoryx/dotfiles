@@ -296,7 +296,7 @@ if exists("+undodir")
 endif
 
 " spellcheck commit messages
-" autocmd FileType gitcommit setlocal spell
+autocmd FileType gitcommit setlocal spell
 
 """""""""""""""""""""""""""""""""
 " text and tabs

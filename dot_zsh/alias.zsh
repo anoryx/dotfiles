@@ -50,6 +50,7 @@ alias chgrp='chgrp --preserve-root'
 alias cat='bat --paging=never'
 alias less='bat'
 alias h='history'
+alias zj='zellij'
 
 # cool stuff
 alias weather='curl v2.wttr.in'
