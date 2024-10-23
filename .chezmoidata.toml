@@ -1,12 +1,10 @@
 [packages]
 
-taps = [
-    "homebrew/bundle",
-]
+taps = ["homebrew/bundle"]
 
 [packages.darwin]
 brews = [
-    "antigen",
+    "antidote",
     "bat",
     "coreutils",
     "cowsay",
@@ -36,9 +34,8 @@ casks = ["bartender", "font-hack", "font-hack-nerd-font", "iterm2"]
 
 [packages.ubuntu]
 brews = [
-    "antigen",
+    "antidote",
     "bat",
-    "coreutils",
     "cowsay",
     "diff-so-fancy",
     "eza",
