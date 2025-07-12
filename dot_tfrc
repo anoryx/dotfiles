@@ -4,8 +4,8 @@
 ; /hilite_whisper
 /set wrapspace=2
 
-/require ~/.tinyfugue/bufftools.tf
-/require ~/.tinyfugue/sepchat.tf
+/require ~/.tinyfugue/bufftools.tf5
+/require ~/.tinyfugue/sepchat.tf5
 
 /set matching=regexp
 
