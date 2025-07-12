@@ -1,6 +1,10 @@
+# install ohmyzsh
 getantidote/use-omz
 
+# load ohmyzsh
 ohmyzsh/ohmyzsh path:lib
+
+# load omz plugins
 ohmyzsh/ohmyzsh path:plugins/command-not-found
 ohmyzsh/ohmyzsh path:plugins/direnv
 ohmyzsh/ohmyzsh path:plugins/fzf
