@@ -1,27 +1,15 @@
-#!/bin/bash
+#!/usr/bin/env zsh
+
+# Track hashes of brewfiles
+# default: {{ include "homebrew/default.Brewfile" | sha256sum }}
+# mac os: {{ include "homebrew/darwin.Brewfile" | sha256sum }}
 
 echo "Installing packages using Homebrew..."
-{{ range .packages.taps -}}
-brew tap {{ . | quote }}
-{{ end -}}
 
-brew bundle --no-lock --file=/dev/stdin <<EOF
+brew bundle --file {{ joinPath .chezmoi.sourceDir "homebrew/default.Brewfile" | quote }}
 
 {{ if eq .chezmoi.os "darwin" -}}
-{{ range .packages.darwin.brews -}}
-brew {{ . | quote }}
-{{ end -}}
-{{ range .packages.darwin.casks -}}
-cask {{ . | quote }}
-{{ end -}}
-EOF
-{{ end -}}
-
-{{ if eq .osid "linux-ubuntu" -}}
-{{ range .packages.ubuntu.brews -}}
-brew {{ . | quote }}
-{{ end -}}
-EOF
+brew bundle --file {{ joinPath .chezmoi.sourceDir "homebrew/darwin.Brewfile" | quote }}
 {{ end -}}
 
 echo "Done!"
