@@ -1,8 +1,8 @@
 # start an interactive rebase from a commit
-bind main R !git rebase -i %(commit)^ -S
-bind diff R !git rebase -i %(commit)^ -S
+bind main R !git rebase -i %(commit)^ # signed: -S
+bind diff R !git rebase -i %(commit)^ # signed: -S
 
-bind status C !git commit -S
+bind status C !git commit # signed: -S
 
 set log-options = --show-signature
 set diff-options = --show-signature
