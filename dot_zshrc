@@ -1,14 +1,14 @@
 #!/bin/zsh
 
 # zsh autoload
-autoload -Uz compinit promptinit
-### only load compinit once a day
-for dump in ~/.zcompdump(N.mh+24); do
-  compinit
-done
-compinit -C
-###
-promptinit
+autoload -Uz compinit
+typeset -i updated_at=$(date +'%j' -r ~/.zcompdump 2>/dev/null || stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)
+if [ $(date +'%j') != $updated_at ]; then
+    compinit -i
+else
+    compinit -C -i
+fi
+zmodload -i zsh/complist
 
 # load zsh config
 typeset -U config_files
