@@ -29,12 +29,12 @@ alias please='sudo'
 alias dmesg='dmesg -T'
 
 # list directory contents
-alias ls='eza --color=always --group-directories-first --icons'
-alias l='eza -lbF --git'
-alias ll='eza -la --icons --octal-permissions --group-directories-first'
-alias la='eza --long --all --group --group-directories-first'
-alias l.="eza -a | rg '^\.'"
-alias lt='eza --tree --level=2'
+# alias ls='eza --color=always --group-directories-first --icons'
+# alias l='eza -lbF --git'
+# alias ll='eza -la --icons --octal-permissions --group-directories-first'
+# alias la='eza --long --all --group --group-directories-first'
+# alias l.="eza -a | rg '^\.'"
+# alias lt='eza --tree --level=2'
 
 # enforce confirmation
 alias mv='mv -i'
