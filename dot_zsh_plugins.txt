@@ -12,8 +12,11 @@ ohmyzsh/ohmyzsh path:plugins/fzf
 ohmyzsh/ohmyzsh path:plugins/git
 ohmyzsh/ohmyzsh path:plugins/kubectl
 ohmyzsh/ohmyzsh path:plugins/kube-ps1
+ohmyzsh/ohmyzsh path:plugins/mise
+ohmyzsh/ohmyzsh path:plugins/golang
+ohmyzsh/ohmyzsh path:plugins/python
 
-Aloxaf/fzf-tab
 lukechilds/zsh-nvm
+Aloxaf/fzf-tab
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-syntax-highlighting
