@@ -130,7 +130,10 @@ typeset -gA keys=(
   )
 
 # set the main keymap to vi-insert
-bindkey -v
+# bindkey -v
+
+# easy command mode
+# bindkey -M viins "jj"                 vi-cmd-mode
 
 # navigation
 bindkey -- "${keys[Home]}"            .beginning-of-line
@@ -149,5 +152,6 @@ bindkey -- "${keys[Ctrl+Right]}"      .forward-word
 
 # fzf tab
 bindkey '^T'                          toggle-fzf-tab
-bindkey '^[l'                         autosuggest-accept
+# bindkey -- "${keys[Alt+Shift+Right]}"                         autosuggest-accept
+bindkey -- "${keys[Shift+Right]}" autosuggest-accept
 bindkey '^[^M'                        autosuggest-execute
