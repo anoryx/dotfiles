@@ -17,7 +17,7 @@ if [ -f "$HOME/.custom.zsh" ]; then
 fi
 
 # load antidote plugins
-source "$(brew --prefix)/opt/antidote/share/antidote/antidote.zsh"
+source "${ZDOTDIR:-$HOME}/.antidote/antidote.zsh"
 antidote load
 
 # starship
