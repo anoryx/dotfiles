@@ -2,15 +2,12 @@
 
 ## installation
 
+[Install mise](https://mise.jdx.dev/installing-mise.html)
+
 ```bash
-# install homebrew
-# https://brew.sh/
-curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+git clone --depth=1 https://github.com/mattmc3/antidote.git ${ZDOTDIR:-$HOME}/.antidote
+mise use --global chezmoi@2.73.3
 
-# install chezmoi
-brew install chezmoi
-
-# install dotfiles
 chezmoi init https://github.com/anoryx/dotfiles.git
 chezmoi diff
 chezmoi apply
