@@ -11,10 +11,6 @@ done
 # make path entries unique
 typeset -aU path
 
-# setup homebrew
-test -d /home/linuxbrew/.linuxbrew \
-    && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
 # optionally load work stuff
 if [ -f "$HOME/.custom.zsh" ]; then
   source "$HOME/.custom.zsh"
@@ -26,3 +22,6 @@ antidote load
 
 # starship
 eval "$(starship init zsh)"
+
+# zoxide
+eval "$(zoxide init zsh)"
