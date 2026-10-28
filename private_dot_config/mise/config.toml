@@ -1,0 +1,19 @@
+[bootstrap.mise_shell_activate]
+zsh = true
+
+[tools]
+bat = "latest"
+eza = "latest"
+fd = "latest"
+fzf = "latest"
+gh = "latest"
+helix = "latest"
+jq = "latest"
+lazygit = "latest"
+ripgrep = "latest"
+ruff = "latest"
+shfmt = "latest"
+starship = "latest"
+uv = "latest"
+zellij = "latest"
+zoxide = "latest"
